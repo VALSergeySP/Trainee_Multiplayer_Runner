@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerAcceleration : NetworkBehaviour
 {
+    public delegate void PlayerSpeedDelegate(float speed);
+    public event PlayerSpeedDelegate PlayerSpeedChangedEvent; 
+
     [SerializeField] private float _maxSpeed = 5f;
     [SerializeField] private float _timeToMaxSpeed = 15f;
 
@@ -42,7 +45,11 @@ public class PlayerAcceleration : NetworkBehaviour
     public void NitroCollected()
     {
         _isNitroCollected = true;
-        Debug.LogWarning("Nitro collected!");
+    }
+
+    public void NitroPressed()
+    {
+        _nitroPressed = true;
     }
 
     public void StartAcceleration()
@@ -82,14 +89,17 @@ public class PlayerAcceleration : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (HasStateAuthority == false) { return; }
         if(_acceleration == 0f) { return; }
 
 
-        if(_nitroPressed && _isNitroCollected)
+        if (_nitroPressed && _isNitroCollected)
         {
             _nitroAcceleration = _speedFromNitro;
             _nitroPressed = false;
             _isNitroCollected = false;
+
+            Debug.LogWarning("Nitro Used!");
         } else
         {
             _nitroPressed = false;
@@ -116,7 +126,7 @@ public class PlayerAcceleration : NetworkBehaviour
             ResetMaxSpeed();
         }
 
-
+        PlayerSpeedChangedEvent?.Invoke(_currentSpeed);
         _rb.velocity = new Vector3(_rb.velocity.x, 0, _currentSpeed);
     }
 }
