@@ -12,6 +12,8 @@ public class SwipeManager : MonoBehaviour
     public bool IsRightSwipe { get => _rightSwipe; }
 
 
+
+
     private Vector2 _startTouchPosition;
     private Vector2 _swipeMovementDelta;
 

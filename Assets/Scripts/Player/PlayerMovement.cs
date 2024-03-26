@@ -17,6 +17,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private Coroutine _movementRoutine;
     private bool _isMoving = false;
+    private float _lastVelocityX = 0f;
 
     private void Awake()
     {
@@ -41,6 +42,11 @@ public class PlayerMovement : NetworkBehaviour
     }
 
 
+    public void MoveBackOnLine()
+    {
+        MoveHorizontal(-_lastVelocityX);
+    }
+
     private void MoveHorizontal(float speed)
     {
         _pointStart = _pointFinish;
@@ -58,17 +64,19 @@ public class PlayerMovement : NetworkBehaviour
     IEnumerator MoveRoutine(float speed)
     {
         _isMoving = true;
+        _lastVelocityX = speed;
+
         while (Mathf.Abs(_pointStart - transform.position.x) < _laneOffset)
         {
             yield return new WaitForFixedUpdate();
 
-            _rb.velocity = new Vector3(speed, _rb.velocity.y, _rb.velocity.z);
+            _rb.velocity = new Vector3(speed, 0, _rb.velocity.z);
 
             float x = Mathf.Clamp(transform.position.x, Mathf.Min(_pointStart, _pointFinish), Mathf.Max(_pointStart, _pointFinish));
             transform.position = new Vector3(x, transform.position.y, transform.position.z);
         }
 
-        _rb.velocity = new Vector3(0, _rb.velocity.y, _rb.velocity.z);
+        _rb.velocity = new Vector3(0, 0, _rb.velocity.z);
         transform.position = new Vector3(_pointFinish, transform.position.y, transform.position.z);
 
         _isMoving = false;
