@@ -20,6 +20,7 @@ public class PlayerAcceleration : NetworkBehaviour
 
 
     private bool _nitroPressed = false;
+    private bool _isNitroCollected = false;
 
     [Networked] private TickTimer _timer { get; set; }
 
@@ -36,6 +37,12 @@ public class PlayerAcceleration : NetworkBehaviour
     private void Start()
     {
         _currentSpeed = 0f;
+    }
+
+    public void NitroCollected()
+    {
+        _isNitroCollected = true;
+        Debug.LogWarning("Nitro collected!");
     }
 
     public void StartAcceleration()
@@ -78,9 +85,13 @@ public class PlayerAcceleration : NetworkBehaviour
         if(_acceleration == 0f) { return; }
 
 
-        if(_nitroPressed)
+        if(_nitroPressed && _isNitroCollected)
         {
             _nitroAcceleration = _speedFromNitro;
+            _nitroPressed = false;
+            _isNitroCollected = false;
+        } else
+        {
             _nitroPressed = false;
         }
 

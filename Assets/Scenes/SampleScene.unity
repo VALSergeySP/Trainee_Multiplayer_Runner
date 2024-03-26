@@ -633,9 +633,12 @@ MonoBehaviour:
   _finishPrefab: {fileID: 3545746736778239645, guid: b823de8710e6f3143888f76363a13aec,
     type: 3}
   _levelParts:
+  - {fileID: 7106248203183858139, guid: 9c58621fa0b5c87498d2f55557285fd3, type: 3}
   - {fileID: 7106248203183858139, guid: 67764f5323024b643bb869c3e45b980e, type: 3}
   - {fileID: 7106248203183858139, guid: f7be0e7d416021c488391a38da9af815, type: 3}
-  - {fileID: 7106248203183858139, guid: 9c58621fa0b5c87498d2f55557285fd3, type: 3}
+  - {fileID: 7106248203183858139, guid: 893304a1558e2664880816bb7334145e, type: 3}
+  - {fileID: 7106248203183858139, guid: 70b4dd5b15c4dbf4bb406922da23cc62, type: 3}
+  - {fileID: 7106248203183858139, guid: 70b4dd5b15c4dbf4bb406922da23cc62, type: 3}
   _levelLength: 50
   _levelPartSizes: {x: 0, y: 0, z: 20}
 --- !u!1 &2103283022
