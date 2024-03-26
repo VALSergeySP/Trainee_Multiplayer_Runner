@@ -133,8 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 213703610}
   - component: {fileID: 213703609}
-  - component: {fileID: 213703612}
   - component: {fileID: 213703611}
+  - component: {fileID: 213703613}
   m_Layer: 0
   m_Name: Runner
   m_TagString: Untagged
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsSceneTakeOverEnabled: 1
   LogSceneLoadErrors: 1
---- !u!114 &213703612
+--- !u!114 &213703613
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,14 +192,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 213703608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5a1ff9dee264bfd829a39e6542dcbd, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b6083c23623cab4d85042b68fc217f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _physicsAuthority: 2
-  _physicsTiming: 3
-  ClientPhysicsSimulation: 0
-  DeltaTimeMultiplier: 1
-  SetUnityFixedTimestep: 0
+  PlayerPrefab: {fileID: 6307537921041383208, guid: 80890ebbcc360db42a6ad592966b92e4,
+    type: 3}
 --- !u!1 &377954843
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +426,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -526,6 +524,20 @@ MonoBehaviour:
   Components:
   - {fileID: 963194226}
   _guid: 1d8bd14f-7a1c-4a05-
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7473cbd1fee30c24a9b783975c8abd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  _cameraOffset: {x: 0, y: 6, z: -12}
 --- !u!1 &1792357545
 GameObject:
   m_ObjectHideFlags: 0
