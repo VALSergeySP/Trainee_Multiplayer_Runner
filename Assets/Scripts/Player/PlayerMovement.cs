@@ -6,7 +6,7 @@ public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private float _laneChangeSpeed = 15f;
    
-    private float _laneOffset = 2.5f;
+    private float _laneOffset;
     private int _numOfLanes = 2;
 
     private Rigidbody _rb;
@@ -19,8 +19,9 @@ public class PlayerMovement : NetworkBehaviour
     private bool _isMoving = false;
     private float _lastVelocityX = 0f;
 
-    private void Awake()
+    public override void Spawned()
     {
+        _laneOffset = LevelStaticInfo.LaneSize;
         _rb = GetComponent<Rigidbody>();
         _swipeManager = GetComponent<SwipeManager>();
     }

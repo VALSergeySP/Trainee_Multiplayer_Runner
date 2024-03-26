@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slowCoef: 0.5
+  _slowTime: 5
 --- !u!114 &1286560589361373476
 MonoBehaviour:
   m_ObjectHideFlags: 0
