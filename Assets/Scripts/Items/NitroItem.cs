@@ -7,6 +7,7 @@ public class NitroItem : Item
         if(player.TryGetComponent<PlayerAcceleration>(out var acceleration))
         {
             acceleration.NitroCollected();
+            gameObject.SetActive(false);
             Runner.Despawn(Object);
         }
     }

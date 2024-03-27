@@ -4,7 +4,7 @@ public class StopObstacle : Obstacle
 {
     [SerializeField] private bool _destroyOnCollision = false;
 
-    protected override void OnCollision(GameObject player)
+    protected override void OnTrigger(GameObject player)
     {
         player.GetComponent<PlayerAcceleration>().ResetSpeed();
 

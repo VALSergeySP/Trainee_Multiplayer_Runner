@@ -2100,6 +2100,7 @@ GameObject:
   - component: {fileID: 1098513038}
   - component: {fileID: 1098513040}
   - component: {fileID: 1098513042}
+  - component: {fileID: 1098513045}
   - component: {fileID: 1098513037}
   m_Layer: 0
   m_Name: UIManager
@@ -2127,6 +2128,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1098513038}
   - {fileID: 1098513040}
+  - {fileID: 1098513042}
+  - {fileID: 1098513045}
 --- !u!114 &1098513038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2199,6 +2202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06080a90b9095c4db89b1467b542426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timerCanvas: {fileID: 160643167}
+  _placeText: {fileID: 1185538504}
+  _timerText: {fileID: 512231039}
 --- !u!114 &1098513043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2233,6 +2239,21 @@ MonoBehaviour:
   - {fileID: 921649128}
   - {fileID: 567918224}
   _previewCanvas: {fileID: 907927073}
+--- !u!114 &1098513045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098513036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1414df7c5f811144941d27c37fa4a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finishCanvas: {fileID: 1917456333}
+  _placeText: {fileID: 1357185109}
+  _timeText: {fileID: 493804689}
 --- !u!1 &1177357111
 GameObject:
   m_ObjectHideFlags: 0
@@ -3290,7 +3311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc63387ad57efd44ac155044b2ed4b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _previewTime: 15
+  _previewTime: 5
+  _startDelay: 3
+  _endDelay: 10
   _managerUI: {fileID: 1098513041}
 --- !u!4 &1576138808
 Transform:

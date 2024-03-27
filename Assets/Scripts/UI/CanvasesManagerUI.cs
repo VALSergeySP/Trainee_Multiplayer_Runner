@@ -17,6 +17,8 @@ public class CanvasesManagerUI : MonoBehaviour
     private PlayerInputUI _playerInputUI;
     public PlayerInputUI InputInstance { get => _playerInputUI; }
 
+    private FinishUI _finishUI;
+    public FinishUI FinishInstance { get => _finishUI; }
 
     private void Start()
     {
@@ -25,5 +27,6 @@ public class CanvasesManagerUI : MonoBehaviour
         _playerUI = GetComponent<PlayerSpeedUI>();
         _timerUI = GetComponent<TimerUI>();
         _playerInputUI = GetComponent<PlayerInputUI>();
+        _finishUI = GetComponent<FinishUI>();
     }
 }
