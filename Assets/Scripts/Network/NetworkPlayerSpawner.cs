@@ -10,8 +10,15 @@ public class NetworkPlayerSpawner : SimulationBehaviour, IPlayerJoined
     {
         if (player == Runner.LocalPlayer)
         {
-            NetworkObject obj = Runner.Spawn(PlayerPrefab, new Vector3(0, _groundOffset, 0), Quaternion.identity);
-            Runner.SetPlayerObject(Runner.LocalPlayer, obj);
+            if (Runner.LocalPlayer.PlayerId == 1)
+            {
+                NetworkObject obj = Runner.Spawn(PlayerPrefab, new Vector3(-LevelStaticInfo.LaneSize, _groundOffset, 0), Quaternion.identity);
+                Runner.SetPlayerObject(Runner.LocalPlayer, obj);
+            } else
+            {
+                NetworkObject obj = Runner.Spawn(PlayerPrefab, new Vector3(LevelStaticInfo.LaneSize, _groundOffset, 0), Quaternion.identity);
+                Runner.SetPlayerObject(Runner.LocalPlayer, obj);
+            }
         }
     }
 }

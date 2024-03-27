@@ -8,12 +8,15 @@ public class PlayerAcceleration : NetworkBehaviour
     public event PlayerSpeedDelegate PlayerSpeedChangedEvent; 
 
     [SerializeField] private float _maxSpeed = 5f;
+    public float MaxSpeed { get => _maxSpeed + _speedFromNitro * _speedFromNitro; }
     [SerializeField] private float _timeToMaxSpeed = 15f;
 
     [SerializeField] private float _speedFromNitro = 5f;
     [SerializeField] private float _nitroAccelerationDecrease = 1f;
 
     private float _currentSpeed;
+    public float CurrentSpeed { get => _currentSpeed; }
+
     private float _acceleration = 0f;
     private float _nitroAcceleration = 0f;
 
@@ -26,11 +29,6 @@ public class PlayerAcceleration : NetworkBehaviour
     private bool _isNitroCollected = false;
 
     [Networked] private TickTimer _timer { get; set; }
-
-    public override void Spawned()
-    {
-        StartAcceleration();
-    }
 
     private void Awake()
     {
@@ -55,6 +53,8 @@ public class PlayerAcceleration : NetworkBehaviour
     public void StartAcceleration()
     {
         _acceleration = _maxSpeed / _timeToMaxSpeed;
+
+        GetComponent<SwipeManager>().enabled = true;
     }
 
     public void StopAcceleration()
@@ -106,19 +106,22 @@ public class PlayerAcceleration : NetworkBehaviour
         }
 
 
-        if (_currentSpeed < _maxSpeed * _maxSpeedCoef)
+        if (_currentSpeed < (_maxSpeed * _maxSpeedCoef + _speedFromNitro * _nitroAcceleration))
         {
             _currentSpeed += (_acceleration + _nitroAcceleration) * Runner.DeltaTime;
         }
         else
         {
-            _currentSpeed = _maxSpeed * _maxSpeedCoef;
+            _currentSpeed = _maxSpeed * _maxSpeedCoef + _speedFromNitro * _nitroAcceleration;
         }
 
 
         if(_nitroAcceleration > 0f)
         {
             _nitroAcceleration -= _nitroAccelerationDecrease * Runner.DeltaTime;
+        } else
+        {
+            _nitroAcceleration = 0f;
         }
 
         if(_timer.Expired(Runner))

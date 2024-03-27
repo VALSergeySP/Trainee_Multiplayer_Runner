@@ -21,6 +21,7 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void Spawned()
     {
+        _pointStart = _pointFinish = transform.position.x;
         _laneOffset = LevelStaticInfo.LaneSize;
         _rb = GetComponent<Rigidbody>();
         _swipeManager = GetComponent<SwipeManager>();

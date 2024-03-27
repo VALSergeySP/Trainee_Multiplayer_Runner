@@ -1,29 +1,39 @@
 using Fusion;
+using UnityEngine;
 
 public class PlayerInputUI : NetworkBehaviour
 {
-    private PlayerAcceleration player;
+    [SerializeField] private GameObject _inputCanvas;
 
+    private PlayerAcceleration _player;
 
-    public void InitializePlayer()
+    public void Initialize()
+    {
+        if(_player == null)
+        {
+            InitializePlayer();
+        }
+
+        _inputCanvas.SetActive(true);
+    }
+
+    public void Deinitialize()
+    {
+        _inputCanvas.SetActive(false);
+    }
+    private void InitializePlayer()
     {
         if (Runner.TryGetPlayerObject(Runner.LocalPlayer, out var networkObject))
         {
-            if (networkObject.TryGetComponent(out player))
-            {
-                player.NitroPressed();
-            }
+            if (networkObject.TryGetComponent(out _player)) {  }
         }
     }
 
     public void OnNitroPressed()
     {
-        if(player  != null)
+        if(_player  != null)
         {
-            player.NitroPressed();
-        } else
-        {
-            InitializePlayer();
+            _player.NitroPressed();
         }
     }
 }

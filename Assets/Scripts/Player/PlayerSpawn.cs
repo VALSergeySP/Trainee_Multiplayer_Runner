@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerSpawn : NetworkBehaviour
 {
     private Camera _camera;
+    private SwipeManager _swipeManager;
 
     public override void Spawned()
     {
@@ -11,6 +12,9 @@ public class PlayerSpawn : NetworkBehaviour
         {
             _camera = Camera.main;
             _camera.GetComponent<ThirdPersonCamera>().Target = transform;
+
+            _swipeManager = GetComponent<SwipeManager>();
+            _swipeManager.enabled = false;
         }
     }
 }

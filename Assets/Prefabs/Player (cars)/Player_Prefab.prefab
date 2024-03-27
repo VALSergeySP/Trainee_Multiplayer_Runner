@@ -935,5 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea103191f25e34447b35b592d4ac2e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 20
+  _maxSpeed: 30
   _timeToMaxSpeed: 15
+  _speedFromNitro: 5
+  _nitroAccelerationDecrease: 1
