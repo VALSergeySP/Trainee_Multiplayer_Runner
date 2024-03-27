@@ -13,6 +13,7 @@ public class PlayerAcceleration : NetworkBehaviour
 
     [SerializeField] private float _speedFromNitro = 5f;
     [SerializeField] private float _nitroAccelerationDecrease = 1f;
+    public float NitroDurationTime { get => _speedFromNitro / _nitroAccelerationDecrease; }
 
     private float _currentSpeed;
     public float CurrentSpeed { get => _currentSpeed; }
@@ -27,6 +28,7 @@ public class PlayerAcceleration : NetworkBehaviour
 
     private bool _nitroPressed = false;
     private bool _isNitroCollected = false;
+    public bool IsNitroCollected { get => _isNitroCollected; }
 
     [Networked] private TickTimer _timer { get; set; }
 

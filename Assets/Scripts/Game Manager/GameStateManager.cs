@@ -193,6 +193,7 @@ public class GameStateManager : NetworkBehaviour
         _managerUI.PlayerInstance.Initialize();
         _managerUI.TimerInstance.Initialize();
         _managerUI.PlayerInstance.SetSpeed(_localPlayerAcceleration.CurrentSpeed);
+        _managerUI.PlayerInstance.SetNitro(_localPlayerAcceleration.IsNitroCollected);
     }
 
     private void UpdateFinishDisplay()

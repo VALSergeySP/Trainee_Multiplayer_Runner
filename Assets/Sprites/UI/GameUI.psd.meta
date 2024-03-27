@@ -152,12 +152,12 @@ TextureImporter:
       name: GameUI_Speedometr
       rect:
         serializedVersion: 2
-        x: 700
-        y: 600
-        width: 1237
-        height: 1245
+        x: 31
+        y: 27
+        width: 1257
+        height: 1261
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -190,6 +190,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: GameUI_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 1360
+        width: 1247
+        height: 1200
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5219221}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fd2b28b42fb14c4d86cf7dff41cb08c
+      internalID: -2143353286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -202,6 +223,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       GameUI_0: -747998190
+      GameUI_1: -2143353286
       GameUI_Speedometr: 2145495926
   mipmapLimitGroupName: 
   pSDRemoveMatte: 1

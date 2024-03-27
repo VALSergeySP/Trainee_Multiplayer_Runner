@@ -8,6 +8,7 @@ public class PlayerSpeedUI : NetworkBehaviour
     [SerializeField] private GameObject _speedCanvas;
     [SerializeField] private Image _arrowImage;
     [SerializeField] private TMP_Text _speedText;
+    [SerializeField] private Slider _nitroSlider;
 
     [SerializeField] private float _arrowStartRotation = 45f;
     [SerializeField] private float _arrowMaxRotation = -135f;
@@ -16,6 +17,12 @@ public class PlayerSpeedUI : NetworkBehaviour
     [SerializeField] private float _speedCoef = 10f; // Чтоб скорость была больше 20 км/ч
     [SerializeField] private float _randomSpeedShifts = 1f;
 
+    [SerializeField] private float _sliderStartValue = 0.7f;
+    [SerializeField] private float _sliderEndValue = 0.05f;
+
+
+    private bool _isNitroUsed = false;
+    private float _nitroValuePerTime;
     private float _playerMaxSpeed;
     private float _arrowDelta = 0f;
 
@@ -24,6 +31,7 @@ public class PlayerSpeedUI : NetworkBehaviour
         if(_arrowDelta == 0f)
         {
             _speedText.text = "0";
+            _nitroSlider.value = _sliderEndValue;
             _arrowImage.rectTransform.rotation = Quaternion.Euler(0, 0, _arrowStartRotation);
 
             InitializePlayer();
@@ -45,15 +53,35 @@ public class PlayerSpeedUI : NetworkBehaviour
             if (networkObject.TryGetComponent<PlayerAcceleration>(out var _player))
             {
                 _playerMaxSpeed = _player.MaxSpeed;
+                _nitroValuePerTime = (_sliderStartValue - _sliderEndValue) / _player.NitroDurationTime;
             }
         }
 
         CanculateDelta();
     }
 
+    private void Update()
+    {
+        if (!_isNitroUsed) return;
+
+        if(_nitroSlider.value > _sliderEndValue)
+            _nitroSlider.value -= Time.deltaTime * _nitroValuePerTime;
+    }
+
     private void CanculateDelta()
     {
         _arrowDelta = (_arrowStartRotation - _arrowMaxRotation) / _playerMaxSpeed;
+    }
+
+    public void NitroUsed()
+    {
+        _isNitroUsed = true;
+    }
+
+    public void SetNitro(bool nitroPicked)
+    {
+        if(nitroPicked)
+            _nitroSlider.value = _sliderStartValue;
     }
 
     public void SetSpeed(float speed)
