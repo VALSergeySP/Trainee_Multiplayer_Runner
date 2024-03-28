@@ -61,7 +61,6 @@ public class AuthManager : MonoBehaviour
         {
             Debug.LogError("Could not resolve all Firebase dependencies: " + _dependencyStatus);
         }
-        
     }
 
 

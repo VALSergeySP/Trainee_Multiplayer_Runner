@@ -1,23 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CarSelectionUI : MonoBehaviour
 {
+    [SerializeField] private PlayerDataManager _playerDataManager;
+
     [SerializeField] private float _carMovementStep = 4f;
     [SerializeField] private float _allCarsMoveOffset = 0.9f;
     [SerializeField] private Transform _startPoint;
     [SerializeField] private GameObject _carPointPrefab;
-    [SerializeField] private CarSO[] _carsData;
     [SerializeField] private Scrollbar _scrollbar;
     [SerializeField] private float _carRotationAngle = -140f;
+    private CarSO[] _carsData;
 
     private Vector3 _startPosition;
 
     public void InitializeCarSelectionMenu()
     {
         _startPosition = _startPoint.position;
+        _carsData = _playerDataManager.Data.AllCars;
 
         for (int i = 0; i < _carsData.Length; i++)
         {
@@ -46,12 +47,14 @@ public class CarSelectionUI : MonoBehaviour
 
     private void OnCarSelected(CarSO carInfo)
     {
-        Debug.Log(carInfo.CarId.ToString() + " selected");
+        _playerDataManager.OnCarSelected(carInfo.CarId);
     }
 
     public void DeinitializeCarSelectionMenu()
     {
-        foreach(Transform child in _startPoint)
+        _scrollbar.value = 0f;
+        _startPoint.position = _startPosition;
+        foreach (Transform child in _startPoint)
         {
             child.gameObject.GetComponent<CarItemUI>().OnCarSelected -= OnCarSelected;
             Destroy(child.gameObject);

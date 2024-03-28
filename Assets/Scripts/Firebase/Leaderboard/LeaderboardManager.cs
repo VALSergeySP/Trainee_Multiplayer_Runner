@@ -1,188 +1,98 @@
-using Firebase.Auth;
 using Firebase.Database;
-using JetBrains.Annotations;
 using System.Collections;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
-{/*
+{
     [Header("Firebase Data")]
-    public DatabaseReference DBreference;
-    public FirebaseUser user;
+    [SerializeField] private PlayerDataManager _playerData;
+    private DatabaseReference _DBreference;
 
-    [Header("LeaderBoardFields")]
-    [SerializeField] TMP_Text _top20Names;
-    [SerializeField] TMP_Text _top20Scores;
+    [Header("LeaderboardFields")]
+    [SerializeField] private GameObject _onePlayerLinePrefab;
+    [SerializeField] private GameObject _leaderboardPanel;
 
-    [SerializeField] TMP_Text _currentUserName;
-    [SerializeField] TMP_Text _currentUserScore;
-    [SerializeField] TMP_Text _currentUserNamePause;
-    [SerializeField] TMP_Text _currentUserScorePause;
-
-    private void Awake()
+    public void InitializeLeaderBoard()
     {
-        InitializeFirebase();
+        _DBreference = _playerData.Database;
+
+        ClearLeaderBoard();
+        StartCoroutine(LoadLeaderboardData());
     }
 
-    private void Start()
+    public void ClearLeaderBoard()
     {
-        Singleton.Instance.LevelGenerationManagerInstance.ResetLevelEvent += ResetLeaderBoard;
-        Singleton.Instance.PlayerCollisionControllerInstance.OnPlayerDeathEvent += SendScoreData;
-        StartCoroutine(UpdateUsernameDatabase(user.DisplayName));
-    }
-
-    private void InitializeFirebase() 
-    {
-        user = FirebaseAuth.DefaultInstance.CurrentUser;
-
-        if(user == null)
+        foreach(Transform child in _leaderboardPanel.transform)
         {
-            Debug.Log("User Error!");
-        }
-
-        DBreference = FirebaseDatabase.DefaultInstance.RootReference;
-
-        Debug.Log("Setting up Firebase Database");
-    }
-
-
-    void SendScoreData() // Для сохранения текущего счёта в БД
-    {
-        int score = Singleton.Instance.ScorePointsManagerInstance.CurrentScore;
-
-        StartCoroutine(UpdateScoreDatabase(score));
-    }
-
-    void ResetLeaderBoard()
-    {
-        StartCoroutine(DataUpdateRoutine());
-    }
-
-    // Метод для обновления данных в таблице лидеров. Сначала обноляет данные в БД, затем загружает данные оттуда
-    IEnumerator DataUpdateRoutine() 
-    {
-        int score = Singleton.Instance.ScorePointsManagerInstance.CurrentScore;
-
-        yield return UpdateScoreDatabase(score);
-        yield return LoadCurrentUserData();
-        yield return LoadLeaderboardData();
-    }
-
-
-    IEnumerator UpdateUsernameDatabase(string username) // Для сохранения имени игрока, если он зашёл впервые
-    {
-        var DBTask = DBreference.Child("users").Child(user.UserId).Child("username").SetValueAsync(username);
-
-        yield return new WaitUntil(() => DBTask.IsCompleted);
-
-        if(DBTask.Exception != null)
-        {
-            Debug.LogWarning($"Failed to register task with {DBTask.Exception}");
-        } else
-        {
-
+            Destroy(child.gameObject);
         }
     }
 
-    IEnumerator UpdateScoreDatabase(int score) // Проверка и сохранение счёта, если он больше записи в БД
+    private void InstantiateOneLine(DataSnapshot childSnapshot, int num, bool isLocal)
     {
-        var DBGetTask = DBreference.Child("users").Child(user.UserId).Child("maxscore").GetValueAsync();
+        int avatarId = int.Parse(childSnapshot.Child("avatarId").Value.ToString());
+        string username = childSnapshot.Child("username").Value.ToString();
+        string score = childSnapshot.Child("maxscore").Value.ToString();
 
-        yield return new WaitUntil(() => DBGetTask.IsCompleted);
+        GameObject item = Instantiate(_onePlayerLinePrefab, _leaderboardPanel.transform);
 
-        if (DBGetTask.Exception != null)
+        if (item.TryGetComponent<LeaderboardItemUI>(out var itemUI) == false)
         {
-            Debug.LogWarning($"Failed to load data from task with {DBGetTask.Exception}");
-        } else if (DBGetTask.Result.Value != null)
-        {
-            int snapshotScore = int.Parse(DBGetTask.Result.Value.ToString());
-            Debug.Log(snapshotScore);
-            Debug.Log("String: " + DBGetTask.Result.Value.ToString());
-
-            if (score < snapshotScore)
-            {
-                score = snapshotScore;
-            }
-        }
-        Debug.Log("String current score to write: " + score);
-
-        var DBTask = DBreference.Child("users").Child(user.UserId).Child("maxscore").SetValueAsync(score);
-
-        yield return new WaitUntil(() => DBTask.IsCompleted);
-
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning($"Failed to register task with {DBTask.Exception}");
+            Debug.LogWarning("Error setting up data!");
         }
         else
         {
-            Debug.Log($"Score was setted to: {score}");
+            itemUI.SetLeaderboardItem(_playerData.Data.GetAvatarById(avatarId), username, score, num, isLocal);
         }
     }
 
-    // Загрузка имени и максимального счёта текущего игрока
-    IEnumerator LoadCurrentUserData() 
+    private void SetupLeaderboard(DataSnapshot snapshot)
     {
-        var DBTask = DBreference.Child("users").Child(user.UserId).GetValueAsync();
+        int count = 0;
+        bool currentUserInTop = false;
+        bool isLocalPlayer;
 
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-
-        if (DBTask.Exception != null)
+        foreach (DataSnapshot childSnapshot in snapshot.Children.Reverse<DataSnapshot>())
         {
-            Debug.LogWarning($"Failed to load data from task with {DBTask.Exception}");
-        }
-        else if (DBTask.Result.Value == null)
-        {
-            _currentUserScore.text = "0";
-            _currentUserScorePause.text = "0";
-        } else
-        {
-            DataSnapshot snapshot = DBTask.Result;
+            count++;
 
-            _currentUserScore.text = snapshot.Child("maxscore").Value.ToString();
-            _currentUserScorePause.text = snapshot.Child("maxscore").Value.ToString();
-        }
+            isLocalPlayer = false;
 
-        _currentUserName.text = user.DisplayName;
-        _currentUserNamePause.text = user.DisplayName;
-    }
-
-    // Для загрузки <= 20 записей из топа БД
-    IEnumerator LoadLeaderboardData()
-    {
-        var DBTask = DBreference.Child("users").OrderByChild("maxscore").GetValueAsync();
-
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning($"Failed to load data from task with {DBTask.Exception}");
-        } else
-        {
-            DataSnapshot snapshot = DBTask.Result;
-
-            _top20Names.text = "";
-            _top20Scores.text = "";
-
-            int count = 0;
-
-            foreach (DataSnapshot childSnapshot in snapshot.Children.Reverse<DataSnapshot>())
+            if (childSnapshot.Key.Equals(PlayerPrefs.GetString("USERID")))
             {
-                count++;
+                currentUserInTop = true;
+                isLocalPlayer = true;
+            }
 
-                string username = childSnapshot.Child("username").Value.ToString();
-                string score = childSnapshot.Child("maxscore").Value.ToString();
+            InstantiateOneLine(childSnapshot, count, isLocalPlayer);
 
-                _top20Names.text += $"{count}. {username}\n";
-                _top20Scores.text += $"{score}\n";
-
-                if(count >= 20)
-                {
-                    break;
-                }
+            if (count >= 5)
+            {
+                break;
             }
         }
-    }*/
+
+        if (currentUserInTop == false)
+        {
+            Debug.Log("User is not in top 5!");
+        }
+    }
+
+    private IEnumerator LoadLeaderboardData()
+    {
+        var DBTask = _DBreference.Child("users").OrderByChild("score").GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to load data from task with {DBTask.Exception}");
+        } else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            SetupLeaderboard(snapshot);
+        }
+    }
 }
