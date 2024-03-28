@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "438203463675",
+    "firebase_url": "https://runner-racing-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "runner-racing",
     "storage_bucket": "runner-racing.appspot.com"
   },
