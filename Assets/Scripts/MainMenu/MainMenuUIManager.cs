@@ -1,11 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuUIManager : MonoBehaviour
 {
     private const string GAME_SCENE_NAME = "SampleScene";
+
+    [SerializeField] private GameObject _playerCar;
 
     [SerializeField] private GameObject _mainMenuCanvas;
     [SerializeField] private Transform _mainMenuCameraPosition;
@@ -33,6 +34,7 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void OnCarSelect()
     {
+        _playerCar.SetActive(false);
         ResetAllCanvases();
         StartCoroutine(CameraMoveRoutine(_carSelectionCameraPosition));
         _carSelectionCanvas.SetActive(true);
@@ -40,6 +42,7 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void OnMainMenu()
     {
+        _playerCar.SetActive(true);
         ResetAllCanvases();
         if(_mainCamera.transform != _mainMenuCameraPosition)
             StartCoroutine(CameraMoveRoutine(_mainMenuCameraPosition));
