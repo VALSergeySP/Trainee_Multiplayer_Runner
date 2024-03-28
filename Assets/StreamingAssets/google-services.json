@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "438203463675",
+    "project_id": "runner-racing",
+    "storage_bucket": "runner-racing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438203463675:android:1e74e4643e2acb18d3fd5e",
+        "android_client_info": {
+          "package_name": "com.VALSergey.Trainee_Multiplayer_Runner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtx11AKIEN3JDRyu4I5eDJRAY6eCSDUuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
