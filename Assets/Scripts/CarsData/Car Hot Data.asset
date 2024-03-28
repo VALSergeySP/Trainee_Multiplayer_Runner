@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fd6f578ed4f1d4dad753721db1bd87, type: 3}
+  m_Name: Car Hot Data
+  m_EditorClassIdentifier: 
+  CarId: 3
+  PlayerCar: {fileID: 6307537921041383208, guid: 1ff103791c1120f41b82fc3a0a238a73,
+    type: 3}
+  MainMenuCar: {fileID: 5507690413834876124, guid: 89f5f2a188c01b44898b930865a74316,
+    type: 3}

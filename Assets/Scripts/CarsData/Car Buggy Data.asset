@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fd6f578ed4f1d4dad753721db1bd87, type: 3}
+  m_Name: Car Buggy Data
+  m_EditorClassIdentifier: 
+  CarId: 0
+  PlayerCar: {fileID: 6307537921041383208, guid: 88fa25a87a9c8d8409645730d408a00c,
+    type: 3}
+  MainMenuCar: {fileID: 7155930506790053323, guid: 93dc0640c6e2e974b99d7904088ffa75,
+    type: 3}

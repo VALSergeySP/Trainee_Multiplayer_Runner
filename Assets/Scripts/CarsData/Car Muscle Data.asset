@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fd6f578ed4f1d4dad753721db1bd87, type: 3}
+  m_Name: Car Muscle Data
+  m_EditorClassIdentifier: 
+  CarId: 4
+  PlayerCar: {fileID: 6307537921041383208, guid: 317232db7d9923747b1e8a290c1c1b27,
+    type: 3}
+  MainMenuCar: {fileID: 2298382198903245471, guid: 2a7146f1583d5424d9d49ba80246a422,
+    type: 3}
